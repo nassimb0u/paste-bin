@@ -4,6 +4,7 @@ from flask_restplus import Api, Resource
 from ..models import Paste, PasteSchema, generate_id
 from time import time
 from config import ID_CONFIG
+from .errors import InvalidRequestError, handle_bad_request_400, handle_not_found_404
 
 api = Api(api, title='Pastebin API', description='A pastebin like API', ordered=True)
 name_space = api.namespace('pastes')
@@ -54,18 +55,6 @@ class PasteDetail(Resource):
         }
 
 
-class ActionError(Exception):
-    def __init__(self, error_type, status_code, message):
-        self.error_type = error_type
-        self.status_code = status_code
-        self.message = message
-
-class InvalidRequestError(ActionError):
-    def __init__(self, message, param):
-        super().__init__('invalid_request_error', 400, message)
-        self.param = param
-
-
 @name_space.errorhandler(InvalidRequestError)
 def handle_InvalidRequestError(error):
     return {
@@ -75,16 +64,3 @@ def handle_InvalidRequestError(error):
         'message': error.message,
         'param': error.param
     }, error.status_code
-
-handle_bad_request_400 = {
-    'success': False,
-    'status': 400,
-    'message': 'The browser (or proxy) sent a request that this server could \
-not understand.'
-}
-
-handle_not_found_404 = {
-    'success': False,
-    'status': 404,
-    'message': 'resource not found'
-}
