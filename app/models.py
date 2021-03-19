@@ -2,6 +2,7 @@ from . import db
 from sqlalchemy import Text
 from marshmallow import Schema, fields as FM
 from config import ID_CONFIG
+from random import randint, shuffle
 
 
 class Paste(db.Model):
@@ -22,3 +23,16 @@ class PasteSchema(Schema):
     id = FM.Str()
     title = FM.Str()
     body = FM.Str()
+
+
+def generate_id(timestamp):
+    uid = f'{timestamp:x}'
+    print(timestamp, uid)
+    bytes_list = []
+    i = 0
+    for _ in range(ID_CONFIG['size']):
+        s = uid[i:i+2] + '0'*(2-len(uid[i:i+2]))
+        bytes_list.append(s)
+        i += 2
+    shuffle(bytes_list)
+    return ''.join(bytes_list)

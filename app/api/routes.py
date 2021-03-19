@@ -1,25 +1,12 @@
 from . import api
 from flask import request
 from flask_restplus import Api, Resource
-from ..models import Paste, PasteSchema
+from ..models import Paste, PasteSchema, generate_id
 from time import time
-from random import randint, shuffle
 from config import ID_CONFIG
 
 api = Api(api, version='1.0', doc='/docs')
 name_space = api.namespace('pastes', description='Pastebin API')
-
-def generate_id(timestamp):
-    uid = f'{timestamp:x}'
-    print(timestamp, uid)
-    bytes_list = []
-    i = 0
-    for _ in range(ID_CONFIG['size']):
-        s = uid[i:i+2] + '0'*(2-len(uid[i:i+2]))
-        bytes_list.append(s)
-        i += 2
-    shuffle(bytes_list)
-    return ''.join(bytes_list)
 
 @name_space.route('/')
 class PasteList(Resource):
