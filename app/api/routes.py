@@ -5,8 +5,8 @@ from ..models import Paste, PasteSchema, generate_id
 from time import time
 from config import ID_CONFIG
 
-api = Api(api, version='1.0', doc='/docs')
-name_space = api.namespace('pastes', description='Pastebin API')
+api = Api(api, title='Pastebin API', description='A pastebin like API')
+name_space = api.namespace('pastes')
 
 @name_space.route('/')
 class PasteList(Resource):
