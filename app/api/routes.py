@@ -1,4 +1,4 @@
-from . import api
+from . import api_blueprint
 from flask import request
 from flask_restplus import Api, Resource
 from ..models import Paste, PasteSchema, generate_id
@@ -6,7 +6,7 @@ from time import time
 from config import ID_CONFIG
 from .errors import InvalidRequestError, handle_bad_request_400, handle_not_found_404
 
-api = Api(api, title='Pastebin API', description='A pastebin like API', ordered=True)
+api = Api(api_blueprint, title='Pastebin API', description='A pastebin like API', ordered=True)
 name_space = api.namespace('pastes')
 
 @name_space.route('/')
@@ -55,7 +55,7 @@ class PasteDetail(Resource):
         }
 
 
-@name_space.errorhandler(InvalidRequestError)
+@api_blueprint.errorhandler(InvalidRequestError)
 def handle_InvalidRequestError(error):
     return {
         'success': False,
