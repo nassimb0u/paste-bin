@@ -16,8 +16,14 @@ handle_bad_request_400 = {
 not understand.'
 }
 
+handle_not_allowed_405 = {
+    "success": False,
+    "status": 405,
+    "message": "The method is not allowed for the requested URL"
+}
+
 handle_not_found_404 = {
     'success': False,
     'status': 404,
-    'message': 'resource not found'
+    'message': 'Resource not found'
 }
