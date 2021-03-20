@@ -1,12 +1,12 @@
 from . import api_blueprint
 from flask import request
-from flask_restplus import Api, Resource
+from flask_restx import Api, Resource
 from ..models import Paste, PasteSchema, generate_id
 from time import time
 from config import ID_CONFIG
 from .errors import InvalidRequestError, handle_bad_request_400, handle_not_found_404
 
-api = Api(api_blueprint, title='Pastebin API', description='A pastebin like API', ordered=True)
+api = Api(api_blueprint, title='Pastebin API', description='A pastebin like API')
 name_space = api.namespace('pastes')
 
 @name_space.route('/')
