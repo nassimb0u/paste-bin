@@ -1,6 +1,5 @@
 from . import db
 from sqlalchemy import Text
-from marshmallow import Schema, fields as FM
 from config import ID_CONFIG
 from random import randint, shuffle
 
@@ -18,12 +17,6 @@ class Paste(db.Model):
     def insert(self):
         db.session.add(self)
         db.session.commit()
-
-class PasteSchema(Schema):
-    id = FM.Str()
-    title = FM.Str()
-    body = FM.Str()
-
 
 def generate_id(timestamp):
     uid = f'{timestamp:x}'
